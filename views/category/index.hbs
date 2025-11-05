@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Category List</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper blue">
+            <a href="/users/dashboard" class="brand-logo">Category Management</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="/users/dashboard">Dashboard</a></li>
+                <li><a href="/users/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <h4>Category List</h4>
+                {{#if isAdmin}}
+                <a href="/category/add" class="btn green">
+                    <i class="material-icons left">add</i>Add Category
+                </a>
+                {{/if}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                {{#if categoryList.length}}
+                <table class="striped highlight responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            {{#if isAdmin}}
+                            <th>Actions</th>
+                            {{/if}}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each categoryList}}
+                        <tr>
+                            <td>{{this.name}}</td>
+                            <td>{{this.description}}</td>
+                            {{#if ../isAdmin}}
+                            <td>
+                                <a href="/category/edit/{{this._id}}" class="btn small blue">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a href="/category/delete/{{this._id}}" class="btn small red"
+                                    onclick="return confirm('Are you sure?')">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                            {{/if}}
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                {{else}}
+                <div class="center-align">
+                    <h5>No categories found</h5>
+                    <p class="grey-text">No categories available</p>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit Category</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper blue">
+            <a href="/users/dashboard" class="brand-logo">Edit Category</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="/category">Category List</a></li>
+                <li><a href="/users/dashboard">Dashboard</a></li>
+                <li><a href="/users/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m8 offset-m2">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Edit Category</span>
+                        <form action="/category/edit/{{category._id}}" method="POST">
+                            <div class="input-field">
+                                <input id="name" name="name" type="text" class="validate" value="{{category.name}}"
+                                    required>
+                                <label for="name" class="active">Category Name</label>
+                            </div>
+                            <div class="input-field">
+                                <textarea id="description" name="description"
+                                    class="materialize-textarea">{{category.description}}</textarea>
+                                <label for="description" class="active">Description</label>
+                            </div>
+                            <div class="card-action">
+                                <button class="btn waves-effect waves-light blue" type="submit">
+                                    <i class="material-icons left">save</i>Update Category
+                                </button>
+                                <a href="/category" class="btn grey">
+                                    <i class="material-icons left">cancel</i>Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

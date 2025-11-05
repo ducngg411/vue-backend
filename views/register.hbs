@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Register</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body class="green lighten-5">
+    <div class="container">
+        <div class="row" style="margin-top: 80px;">
+            <div class="col s12 m6 offset-m3">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title center-align">
+                            <i class="material-icons medium">person_add</i>
+                            <br>Register
+                        </span>
+                        <form action="/users/register" method="POST">
+                            <div class="input-field">
+                                <i class="material-icons prefix">person</i>
+                                <input id="username" name="username" type="text" class="validate" required>
+                                <label for="username">Username</label>
+                            </div>
+                            <div class="input-field">
+                                <i class="material-icons prefix">lock</i>
+                                <input id="password" name="password" type="password" class="validate" required>
+                                <label for="password">Password</label>
+                            </div>
+                            <div class="input-field">
+                                <i class="material-icons prefix">lock_outline</i>
+                                <input id="repeatPassword" name="repeatPassword" type="password" class="validate"
+                                    required>
+                                <label for="repeatPassword">Repeat Password</label>
+                            </div>
+                            <div class="center-align">
+                                <button class="btn waves-effect waves-light green" type="submit">
+                                    <i class="material-icons left">person_add</i>Register
+                                </button>
+                            </div>
+                        </form>
+                        <div class="center-align" style="margin-top: 20px;">
+                            <p>Already have an account? <a href="/users/login">Login here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

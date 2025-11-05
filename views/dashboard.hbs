@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper blue">
+            <a href="#" class="brand-logo">Dashboard</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="/users/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <h4>Welcome, {{username}}!</h4>
+                <p>Role: {{role}}</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <!-- Category Section -->
+            <div class="col s12 m6">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Categories</span>
+                        <p>Manage product categories</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="/category">View Categories</a>
+                        {{#if isAdmin}}
+                        <a href="/category/add">Add Category</a>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product Section -->
+            <div class="col s12 m6">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Products</span>
+                        <p>Manage products</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="/product">View Products</a>
+                        {{#if isAdmin}}
+                        <a href="/product/add">Add Product</a>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
