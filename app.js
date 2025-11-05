@@ -1,31 +1,50 @@
+require('dotenv').config();
 var express = require('express');
 var app = express();
 var session = require('express-session');
+var MongoStore = require('connect-mongo');
 var cors = require('cors');
 
 var mongoose = require('mongoose');
-var datababse = "mongodb+srv://ducntgch221177:Ducham2004@cluster0.zob9b.mongodb.net/Web?retryWrites=true&w=majority";
 var bodyParser = require('body-parser');
 var categoryRouter = require('./routes/category');
 var productRouter = require('./routes/product');
 var usersRouter = require('./routes/users');
 
 // Cấu hình CORS - Phải đặt TRƯỚC session
+const allowedOrigins = process.env.FRONTEND_URL 
+  ? process.env.FRONTEND_URL.split(',') 
+  : ['http://localhost:5173'];
+
 app.use(cors({
-  origin: 'http://localhost:5173', // URL của frontend Vue
-  credentials: true, // Cho phép gửi cookies
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Cấu hình session
+// Cấu hình session với MongoDB store
 app.use(session({
-  secret: 'your-secret-key',
+  secret: process.env.SESSION_SECRET || 'your-secret-key',
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI,
+    touchAfter: 24 * 3600 // lazy session update (24 hours)
+  }),
   cookie: { 
-    secure: false,
+    secure: process.env.NODE_ENV === 'production', // true in production (HTTPS only)
     httpOnly: true,
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' for cross-site in production
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }));
@@ -65,9 +84,9 @@ app.use('/category', categoryRouter);
 app.use('/product', productRouter);
 app.use('/users', usersRouter);
 
-mongoose.connect(datababse)
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
-    console.log("Connected to database " + datababse);
+    console.log("Connected to database successfully");
   })
   .catch((err) => {
     console.log("Database connection error:", err);

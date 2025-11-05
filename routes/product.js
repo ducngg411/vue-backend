@@ -107,7 +107,8 @@ router.post('/add', requireAdmin, upload.single('image'), async (req, res) => {
         
         // Ưu tiên file upload, nếu không có thì dùng imageUrl
         if (req.file) {
-            productData.image = '/images/' + req.file.filename;
+            // Nếu dùng Cloudinary, path sẽ là URL đầy đủ
+            productData.image = req.file.path || ('/images/' + req.file.filename);
             console.log('Using uploaded file:', productData.image);
         } else if (req.body.imageUrl && req.body.imageUrl.trim() !== '') {
             productData.image = req.body.imageUrl;
@@ -152,7 +153,7 @@ router.post('/edit/:id', requireAdmin, upload.single('image'), async (req, res) 
         
         // Ưu tiên file upload, nếu không có thì dùng imageUrl
         if (req.file) {
-            updateData.image = '/images/' + req.file.filename;
+            updateData.image = req.file.path || ('/images/' + req.file.filename);
             console.log('Using uploaded file:', updateData.image);
         } else if (req.body.imageUrl && req.body.imageUrl.trim() !== '') {
             updateData.image = req.body.imageUrl;
@@ -246,7 +247,7 @@ router.post('/api/products', upload.single('image'), async (req, res) => {
         
         // Nếu có upload file, thêm đường dẫn vào data
         if (req.file) {
-            productData.image = '/images/' + req.file.filename;
+            productData.image = req.file.path || ('/images/' + req.file.filename);
         }
         
         const newProduct = await ProductModel.create(productData);
@@ -278,7 +279,7 @@ router.put('/api/products/:id', upload.single('image'), async (req, res) => {
         
         // Nếu có upload file mới, cập nhật đường dẫn
         if (req.file) {
-            updateData.image = '/images/' + req.file.filename;
+            updateData.image = req.file.path || ('/images/' + req.file.filename);
         }
         
         const updatedProduct = await ProductModel.findByIdAndUpdate(
